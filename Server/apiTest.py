@@ -14,14 +14,12 @@ client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
 
-# Create a chat completion
-completion = client.chat.completions.create(
-  model="gpt-3.5-turbo",
+response = client.chat.completions.create(
+  model="gpt-3.5-turbo-1106",
+  response_format={ "type": "json_object" },
   messages=[
-    {"role": "system", "content": "You are a quiz creator given a topic and a number of questions you will return a quiz. multiple choice with 4 choices for each question, and one correct answer marked with a true"},
-    {"role": "user", "content": "Topic: Animals in nature, number of questions: 5"}
+    {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
+    {"role": "user", "content": "Who won the world series in 2020?"}
   ]
 )
-
-# Print the response
-print(completion.choices[0].message)
+print(response.choices[0].message.content)
